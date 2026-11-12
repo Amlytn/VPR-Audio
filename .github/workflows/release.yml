@@ -1,0 +1,46 @@
+name: release
+
+# 推送 v* tag 时打包并创建草稿 Release
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements-dev.txt
+
+      - name: Run tests
+        run: python -m pytest -q
+
+      - name: Build onefile exe
+        run: python scripts/build.py
+
+      - name: Verify packaged decryptors
+        shell: pwsh
+        run: |
+          $exe = "dist/VPR Audio.exe"
+          if (-not (Test-Path $exe)) { throw "缺少 $exe" }
+          $toc = "build/VPR-Audio/Analysis-00.toc"
+          foreach ($mod in @("vpr.decrypt.kgm", "vpr.decrypt.qmc", "vpr.decrypt.ncm")) {
+            if (-not (Select-String -Path $toc -Pattern $mod -SimpleMatch -Quiet)) {
+              throw "打包清单缺少 $mod"
+            }
+          }
+
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >
+          gh release create ${{ github.ref_name }} "dist/VPR Audio.exe"
+          --draft --title "${{ github.ref_name }}" --generate-notes

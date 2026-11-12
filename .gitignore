@@ -1,0 +1,20 @@
+__pycache__/
+*.pyc
+.venv/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+_e2e-out/
+*.log
+*.spec.bak
+
+# 运行时分发的第三方工具（体积大，不随源码入库；打包时放 exe 同目录）
+ffmpeg.exe
+kgg-dec.exe
+
+# 便携模式在程序目录留下的用户数据
+settings.json
+history.jsonl
+# 开发模式下的默认输出目录（settings.get_tool_dir()/kgm-vpr-out-ui）
+kgm-vpr-out-ui/

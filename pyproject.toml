@@ -1,0 +1,10 @@
+[project]
+name = "vpr-audio"
+version = "2.0.1"
+description = "酷狗 KGG/KGM/KGMA/VPR、网易云 NCM、QQ 音乐 QMC 解密与转码桌面应用"
+authors = [{ name = "Amlytn" }]
+license = { text = "MIT" }
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

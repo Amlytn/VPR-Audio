@@ -1,0 +1,14 @@
+# 仓库内统一 LF，检出也保持 LF：不随各机器的 core.autocrlf 漂移，
+# Windows / Linux CI 检出结果一致，杜绝幽灵 diff
+* text=auto eol=lf
+
+# 二进制文件：不做行尾处理、不做 diff
+*.png binary
+*.ico binary
+*.icns binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
+*.exe binary
+*.rar binary
+*.html text eol=lf

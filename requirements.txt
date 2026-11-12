@@ -1,0 +1,5 @@
+pycryptodome==4.2.0
+pywebview==6.2.1
+pythonnet==3.2.1
+pystray==0.19.5
+Pillow==13.0.0
